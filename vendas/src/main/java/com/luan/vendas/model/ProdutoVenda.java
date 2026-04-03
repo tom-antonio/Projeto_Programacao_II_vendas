@@ -3,16 +3,18 @@ package com.luan.vendas.model;
 public class ProdutoVenda {
     
     private int id;
-    private Venda venda;
-    private Produto produto;
+    private int idVenda;
+    private int idProduto;
+    private int qtdeProduto;
 
     public ProdutoVenda() {
     }
 
-    public ProdutoVenda(int id, Venda venda, Produto produto) {
+    public ProdutoVenda(int id, int idVenda, int idProduto, int qtdeProduto) {
         this.id = id;
-        this.venda = venda;
-        this.produto = produto;
+        this.idVenda = idVenda;
+        this.idProduto = idProduto;
+        this.qtdeProduto = qtdeProduto;
     }
 
     public int getId() {
@@ -23,19 +25,27 @@ public class ProdutoVenda {
         this.id = id;
     }
 
-    public Venda getVenda() {
-        return venda;
+    public int getIdVenda() {
+        return idVenda;
     }
 
-    public void setVenda(Venda venda) {
-        this.venda = venda;
+    public void setIdVenda(int idVenda) {
+        this.idVenda = idVenda;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public int getIdProduto() {
+        return idProduto;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
+    }
+
+    public int getQtdeProduto() {
+        return qtdeProduto;
+    }
+
+    public void setQtdeProduto(int qtdeProduto) {
+        this.qtdeProduto = qtdeProduto;
     }
 }

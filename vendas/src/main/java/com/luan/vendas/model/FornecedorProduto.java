@@ -3,16 +3,16 @@ package com.luan.vendas.model;
 public class FornecedorProduto {
     
     private int id;
-    private Fornecedor fornecedor;
-    private Produto produto;
+    private int idFornecedor;
+    private int idProduto;
 
     public FornecedorProduto() {
     }
 
-    public FornecedorProduto(int id, Fornecedor fornecedor, Produto produto) {
+    public FornecedorProduto(int id, int idFornecedor, int idProduto) {
         this.id = id;
-        this.fornecedor = fornecedor;
-        this.produto = produto;
+        this.idFornecedor = idFornecedor;
+        this.idProduto = idProduto;
     }
 
     public int getId() {
@@ -23,19 +23,19 @@ public class FornecedorProduto {
         this.id = id;
     }
 
-    public Fornecedor getFornecedor() {
-        return fornecedor;
+    public int getIdFornecedor() {
+        return idFornecedor;
     }
 
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setIdFornecedor(int idFornecedor) {
+        this.idFornecedor = idFornecedor;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public int getIdProduto() {
+        return idProduto;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
     }
 }

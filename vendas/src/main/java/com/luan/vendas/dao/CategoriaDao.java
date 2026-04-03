@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,11 +13,12 @@ import com.luan.vendas.model.Categoria;
 public class CategoriaDao {
 
     	public boolean salvar(Categoria categoria) {
-		String sql = "INSERT INTO tcategoria (nome_categoria) "
-				   + "VALUES (?) RETURNING id_categoria";
+			String sql = "INSERT INTO tcategoria (nome_categoria) VALUES (?)";
 
 		try (Connection conn = Postgres.conectar();
-			 PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {
+				 PreparedStatement ps = conn != null
+						 ? conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+						 : null) {
 
 			if (ps == null) {
 				return false;
@@ -24,9 +26,12 @@ public class CategoriaDao {
 
 			ps.setString(1, categoria.getNome());
 
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				categoria.setId(rs.getInt(1));
+			int linhasAfetadas = ps.executeUpdate();
+			if (linhasAfetadas > 0) {
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next()) {
+					categoria.setId(rs.getInt(1));
+				}
 				return true;
 			}
 		} catch (SQLException e) {
@@ -101,28 +106,4 @@ public class CategoriaDao {
 		return false;
 	}
 
-    public Categoria buscarPorNome(String nome) {
-        String sql = "SELECT id_categoria, nome_categoria FROM tcategoria WHERE nome_categoria ILIKE ?";
-
-        try (Connection conn = Postgres.conectar();
-             PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {
-
-            if (ps == null) {
-                return null;
-            }
-
-            ps.setString(1, nome);
-
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Categoria(
-                    rs.getInt("id_categoria"),
-                    rs.getString("nome_categoria")
-                );
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar categoria por nome: " + e.getMessage());
-        }
-        return null;
-    }
 }
