@@ -6,15 +6,17 @@ public class ProdutoVenda {
     private int idVenda;
     private int idProduto;
     private int qtdeProduto;
+    private double valorUnit;
 
     public ProdutoVenda() {
     }
 
-    public ProdutoVenda(int id, int idVenda, int idProduto, int qtdeProduto) {
+    public ProdutoVenda(int id, int idVenda, int idProduto, int qtdeProduto, double valorUnit) {
         this.id = id;
         this.idVenda = idVenda;
         this.idProduto = idProduto;
         this.qtdeProduto = qtdeProduto;
+        this.valorUnit = valorUnit;
     }
 
     public int getId() {
@@ -47,5 +49,13 @@ public class ProdutoVenda {
 
     public void setQtdeProduto(int qtdeProduto) {
         this.qtdeProduto = qtdeProduto;
+    }
+
+    public double getValorUnit() {
+        return valorUnit;
+    }
+
+    public void setValorUnit(double valorUnit) {
+        this.valorUnit = valorUnit;
     }
 }

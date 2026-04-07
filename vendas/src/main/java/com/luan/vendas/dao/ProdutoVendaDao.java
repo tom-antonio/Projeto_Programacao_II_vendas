@@ -26,12 +26,13 @@ public class ProdutoVendaDao {
     }
 
     boolean inserir(Connection conn, ProdutoVenda produtoVenda) throws SQLException {
-        String sql = "INSERT INTO tprod_venda (fk_venda, fk_produto, qtde_prodvenda) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tprod_venda (fk_venda, fk_produto, qtde_prodvenda, valor_unit) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, produtoVenda.getIdVenda());
             ps.setInt(2, produtoVenda.getIdProduto());
             ps.setInt(3, produtoVenda.getQtdeProduto());
+            ps.setDouble(4, produtoVenda.getValorUnit());
 
             int linhasAfetadas = ps.executeUpdate();
             if (linhasAfetadas > 0) {
@@ -47,7 +48,7 @@ public class ProdutoVendaDao {
 
     public List<ProdutoVenda> listarTodos() {
         List<ProdutoVenda> relacionamentos = new ArrayList<>();
-        String sql = "SELECT id_prodvenda, fk_venda, fk_produto, qtde_prodvenda FROM tprod_venda ORDER BY fk_venda, fk_produto";
+        String sql = "SELECT id_prodvenda, fk_venda, fk_produto, qtde_prodvenda, valor_unit FROM tprod_venda ORDER BY fk_venda, fk_produto";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {
@@ -62,7 +63,8 @@ public class ProdutoVendaDao {
                         rs.getInt("id_prodvenda"),
                         rs.getInt("fk_venda"),
                         rs.getInt("fk_produto"),
-                        rs.getInt("qtde_prodvenda")
+                    rs.getInt("qtde_prodvenda"),
+                    rs.getDouble("valor_unit")
                 );
                 relacionamentos.add(produtoVenda);
             }
@@ -104,7 +106,7 @@ public class ProdutoVendaDao {
 
     public List<ProdutoVenda> listarPorVendaId(int vendaId) {
         List<ProdutoVenda> relacionamentos = new ArrayList<>();
-        String sql = "SELECT id_prodvenda, fk_venda, fk_produto, qtde_prodvenda FROM tprod_venda WHERE fk_venda = ? ORDER BY fk_produto";
+        String sql = "SELECT id_prodvenda, fk_venda, fk_produto, qtde_prodvenda, valor_unit FROM tprod_venda WHERE fk_venda = ? ORDER BY fk_produto";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {
@@ -120,7 +122,8 @@ public class ProdutoVendaDao {
                         rs.getInt("id_prodvenda"),
                         rs.getInt("fk_venda"),
                         rs.getInt("fk_produto"),
-                        rs.getInt("qtde_prodvenda")
+                    rs.getInt("qtde_prodvenda"),
+                    rs.getDouble("valor_unit")
                 );
                 relacionamentos.add(produtoVenda);
             }

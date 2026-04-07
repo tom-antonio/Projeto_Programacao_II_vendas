@@ -13,7 +13,7 @@ public class ProdutoVendaController {
         this.produtoVendaDao = new ProdutoVendaDao();
     }
 
-    public String salvarProdutoVenda(int vendaId, int produtoId, int qtdeProduto) {
+    public String salvarProdutoVenda(int vendaId, int produtoId, int qtdeProduto, double valorUnit) {
         if (vendaId <= 0) {
             return "ID da venda inválido.";
         }
@@ -23,11 +23,15 @@ public class ProdutoVendaController {
         if (qtdeProduto < 0) {
             return "A quantidade do produto não pode ser menor que zero.";
         }
+        if (valorUnit < 0) {
+            return "O valor unitário não pode ser menor que zero.";
+        }
 
         ProdutoVenda produtoVenda = new ProdutoVenda();
         produtoVenda.setIdVenda(vendaId);
         produtoVenda.setIdProduto(produtoId);
         produtoVenda.setQtdeProduto(qtdeProduto);
+        produtoVenda.setValorUnit(valorUnit);
 
         boolean salvo = produtoVendaDao.salvar(produtoVenda);
         if (!salvo) {
