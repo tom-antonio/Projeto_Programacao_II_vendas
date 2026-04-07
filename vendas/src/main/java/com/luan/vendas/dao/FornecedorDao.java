@@ -13,7 +13,7 @@ import com.luan.vendas.model.Fornecedor;
 public class FornecedorDao {
 
     public boolean salvar(Fornecedor fornecedor) {
-        String sql = "INSERT INTO tfornecedor (nome_fantasia, razao_social, cnpj) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tfornecedor (nome_fornecedor, razao_fornecedor, cnpj_fornecedor) VALUES (?, ?, ?)";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null
@@ -24,9 +24,9 @@ public class FornecedorDao {
                 return false;
             }
 
-            ps.setString(1, fornecedor.getNome_fantasia());
-            ps.setString(2, fornecedor.getRazao_social());
-            ps.setString(3, fornecedor.getCnpj());
+            ps.setString(1, fornecedor.getNome_fornecedor());
+            ps.setString(2, fornecedor.getRazao_fornecedor());
+            ps.setString(3, fornecedor.getCnpj_fornecedor());
 
             int linhasAfetadas = ps.executeUpdate();
             if (linhasAfetadas > 0) {
@@ -57,9 +57,9 @@ public class FornecedorDao {
             while (rs.next()) {
                 Fornecedor fornecedor = new Fornecedor(
                     rs.getInt("id_fornecedor"),
-                    rs.getString("nome_fantasia"),
-                    rs.getString("razao_social"),
-                    rs.getString("cnpj")
+                    rs.getString("nome_fornecedor"),
+                    rs.getString("razao_fornecedor"),
+                    rs.getString("cnpj_fornecedor")
                 );
                 fornecedores.add(fornecedor);
             }
@@ -70,7 +70,7 @@ public class FornecedorDao {
     }
 
     public boolean alterar(Fornecedor fornecedor) {
-        String sql = "UPDATE tfornecedor SET nome_fantasia = ?, razao_social = ?, cnpj = ? WHERE id_fornecedor = ?";
+        String sql = "UPDATE tfornecedor SET nome_fornecedor = ?, razao_fornecedor = ?, cnpj_fornecedor = ? WHERE id_fornecedor = ?";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {
@@ -79,9 +79,9 @@ public class FornecedorDao {
                 return false;
             }
 
-            ps.setString(1, fornecedor.getNome_fantasia());
-            ps.setString(2, fornecedor.getRazao_social());
-            ps.setString(3, fornecedor.getCnpj());
+            ps.setString(1, fornecedor.getNome_fornecedor());
+            ps.setString(2, fornecedor.getRazao_fornecedor());
+            ps.setString(3, fornecedor.getCnpj_fornecedor());
             ps.setInt(4, fornecedor.getId());
 
             int linhasAfetadas = ps.executeUpdate();

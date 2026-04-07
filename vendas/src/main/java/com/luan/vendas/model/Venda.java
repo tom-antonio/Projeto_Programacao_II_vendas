@@ -1,6 +1,7 @@
 package com.luan.vendas.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Venda {
     
@@ -8,15 +9,17 @@ public class Venda {
     private Date data_venda;
     private double valor_total;
     private Cliente cliente;
+    private List<ProdutoVenda> produtosVenda;
 
     public Venda() {
     }
 
-    public Venda(int id, Date data_venda, double valor_total, Cliente cliente) {
+    public Venda(int id, Date data_venda, double valor_total, Cliente cliente, List<ProdutoVenda> produtosVenda) {
         this.id = id;
         this.data_venda = data_venda;
         this.valor_total = valor_total;
         this.cliente = cliente;
+        this.produtosVenda = produtosVenda;
     }
 
     public int getId() {
@@ -49,5 +52,13 @@ public class Venda {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<ProdutoVenda> getProdutosVenda() {
+        return produtosVenda;
+    }
+
+    public void setProdutosVenda(List<ProdutoVenda> produtosVenda) {
+        this.produtosVenda = produtosVenda;
     }
 }

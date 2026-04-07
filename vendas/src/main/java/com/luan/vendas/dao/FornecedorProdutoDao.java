@@ -13,7 +13,7 @@ import com.luan.vendas.model.FornecedorProduto;
 public class FornecedorProdutoDao {
 
     public boolean salvar(FornecedorProduto fornecedorProduto) {
-        String sql = "INSERT INTO tfornecedor_produto (id_fornecedor, id_produto) VALUES (?, ?)";
+        String sql = "INSERT INTO tprodforne (fk_fornecedor, fk_produto) VALUES (?, ?)";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null
@@ -43,7 +43,7 @@ public class FornecedorProdutoDao {
 
     public List<FornecedorProduto> listarTodos() {
         List<FornecedorProduto> relacionamentos = new ArrayList<>();
-        String sql = "SELECT id_fornecedor_produto, id_fornecedor, id_produto FROM tfornecedor_produto ORDER BY id_fornecedor, id_produto";
+        String sql = "SELECT id_prod_forne, fk_fornecedor, fk_produto FROM tprodforne ORDER BY fk_fornecedor, fk_produto";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {
@@ -56,8 +56,8 @@ public class FornecedorProdutoDao {
             while (rs.next()) {
                 FornecedorProduto fornecedorProduto = new FornecedorProduto(
                     rs.getInt("id_fornecedor_produto"),
-                    rs.getInt("id_fornecedor"),
-                    rs.getInt("id_produto")
+                    rs.getInt("fk_fornecedor"),
+                    rs.getInt("fk_produto")
                 );
                 relacionamentos.add(fornecedorProduto);
             }
@@ -68,7 +68,7 @@ public class FornecedorProdutoDao {
     }
 
     public boolean excluir(int id) {
-        String sql = "DELETE FROM tfornecedor_produto WHERE id_fornecedor_produto = ?";
+        String sql = "DELETE FROM tprodforne WHERE id_fornecedor_produto = ?";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {

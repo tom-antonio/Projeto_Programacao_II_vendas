@@ -14,7 +14,7 @@ import com.luan.vendas.model.Produto;
 public class ProdutoDao {
 
     public boolean salvar(Produto produto) {
-        String sql = "INSERT INTO tproduto (nome_produto, preco_produto, qtde_estoque, id_categoria) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tproduto (nome_produto, preco_produto, qtde_estoque, fk_produto_categoria) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null
@@ -49,7 +49,7 @@ public class ProdutoDao {
         String sql = "SELECT p.id_produto, p.nome_produto, p.preco_produto, p.qtde_estoque, "
                 + "c.id_categoria, c.nome_categoria "
                 + "FROM tproduto p "
-                + "JOIN tcategoria c ON c.id_categoria = p.id_categoria "
+                + "JOIN tcategoria c ON c.id_categoria = p.fk_produto_categoria "
                 + "ORDER BY p.nome_produto";
 
         try (Connection conn = Postgres.conectar();
@@ -82,7 +82,7 @@ public class ProdutoDao {
     }
 
     public boolean alterar(Produto produto) {
-        String sql = "UPDATE tproduto SET nome_produto = ?, preco_produto = ?, qtde_estoque = ?, id_categoria = ? WHERE id_produto = ?";
+        String sql = "UPDATE tproduto SET nome_produto = ?, preco_produto = ?, qtde_estoque = ?, fk_produto_categoria = ? WHERE id_produto = ?";
 
         try (Connection conn = Postgres.conectar();
              PreparedStatement ps = conn != null ? conn.prepareStatement(sql) : null) {
